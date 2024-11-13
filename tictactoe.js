@@ -11,23 +11,29 @@
 
 //each time x or o is made iterate though that and +1 to it
 
-function WinCondition(){
-    let winCount = 0; // if this equals 3 then target has won
 
-    function Add()
-    {
-        winCount += 1;
-    }
-
-    function IsWin()
-    {
-        return winCount >= 3;
-    }
-
-    return {Add, IsWin};
-}
-
-function CheckWin()
+function TicTacToe()
 {
+    let xArray = [0,0,0,0,0,0,0,0,0];
+    let oArray = [0,0,0,0,0,0,0,0,0];
 
+    function PlayerMove(player, pos)
+    {
+        if(player == 'x')
+        {
+            xArray[pos] = 1;
+        }
+        else
+        {
+            oArray[pos] = 1;
+        }
+
+        CheckWin(player, pos);
+    }
+
+    function CheckWin(player, pos)
+    {
+        
+    }
 }
+
