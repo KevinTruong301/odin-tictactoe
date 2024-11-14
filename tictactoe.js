@@ -14,26 +14,67 @@
 
 function TicTacToe()
 {
-    let xArray = [0,0,0,0,0,0,0,0,0];
-    let oArray = [0,0,0,0,0,0,0,0,0];
+    let board = [[],[],[]];
 
-    function PlayerMove(player, pos)
+    function PlayerMove(player, posX, posY)
     {
-        if(player == 'x')
-        {
-            xArray[pos] = 1;
-        }
-        else
-        {
-            oArray[pos] = 1;
-        }
-
-        CheckWin(player, pos);
+        board[posX][posY] = player;
+        CheckWin(player, posX, posY);
     }
 
-    function CheckWin(player, pos)
+    function CheckWin(player, posX, posY)
     {
-        
+        //board check x
+        let row = 0;
+        let column = 0;
+        let diag = 0;
+        let antiDiag = 0;
+
+        for(let i = 0; i < 3; i++)
+        {
+            if(board[posX][i] == player)
+            {
+                column += 1;
+            }
+        }
+
+        for(let i = 0; i < 3; i++)
+        {
+            if(board[i][posY] == player)
+            {
+                row += 1;
+            }
+        }
+
+
+        for(let i = 0; i < 3; i++)
+        {
+            if(board[i][i] == player)
+            {
+                diag += 1;
+            }
+        }
+
+        for(let i = 0; i < 3; i++)
+        {
+            if(board[i][2-i] == player)
+            {
+                antiDiag += 1;
+            }
+        }
+
+        return row == 3 || column == 3 || diag == 3 || antiDiag == 3;
     }
+
+    return {PlayerMove, CheckWin};
 }
+
+let game = TicTacToe();
+
+game.PlayerMove('x', 0, 1);
+game.PlayerMove('o', 0, 0);
+game.PlayerMove('x', 1, 1);
+game.PlayerMove('o', 1, 0);
+game.PlayerMove('x', 2, 1);
+
 
