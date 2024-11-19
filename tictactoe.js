@@ -87,17 +87,27 @@ function TicTacToe()
         board = [[],[],[]];
     }
 
-    return {PlayerMove, CheckWin, GetPlayerTurn};
+    return {PlayerMove, CheckWin, GetPlayerTurn, ResetBoard};
 }
 
 let ticTacToe = TicTacToe();
 
 function PlayerMove(evt){
-    if(evt.currentTarget.textContent != "X" && evt.currentTarget.textContent != "O")
+    if(evt.currentTarget.player != "X" && evt.currentTarget.player != "O")
     {
-        evt.currentTarget.textContent = ticTacToe.GetPlayerTurn() ? "X" : "O";
+        evt.currentTarget.player = ticTacToe.GetPlayerTurn() ? "X" : "O";
+        evt.currentTarget.style.backgroundImage = ticTacToe.GetPlayerTurn() ? "url('Images/X.jpg')" : "url('Images/O.jpg')";
+        evt.currentTarget.style.backgroundSize = "cover";
         let isWin = ticTacToe.PlayerMove(evt.currentTarget.posX, evt.currentTarget.posY);
         console.log(isWin);
+
+        if(isWin)
+        {
+            setTimeout(function(){
+                alert("WIN");
+                ResetGame();
+            }, 100);
+        }
     }
 }
 
@@ -107,8 +117,8 @@ function CreateSquare(posX, posY){
 
     let square = document.createElement("div");
 
-    square.style.width = "100px";
-    square.style.height = "100px";
+    square.style.width = "100%";
+    square.style.height = "100%";
     square.style.border = "black solid 1px";
     
     square.addEventListener("click", PlayerMove);
@@ -129,3 +139,15 @@ function PopulateTicTacToeGrid(){
     }
 }
 PopulateTicTacToeGrid();
+
+let resetButton = document.querySelector("#reset-button");
+resetButton.addEventListener("click", ResetGame)
+
+function ResetGame()
+{
+    ticTacToe.ResetBoard();
+    let tictactoeGrid = document.querySelector("#tictactoe-grid");
+    tictactoeGrid.textContent = "";
+
+    PopulateTicTacToeGrid();
+}
