@@ -85,17 +85,21 @@ function TicTacToe()
     function ResetBoard()
     {
         board = [[],[],[]];
+        turn = true;
     }
 
     return {PlayerMove, CheckWin, GetPlayerTurn, ResetBoard};
 }
 
 let ticTacToe = TicTacToe();
+let player1Input = document.querySelector("#player-1-input");
+let player2Input = document.querySelector("#player-2-input");
 
 function PlayerMove(evt){
     if(evt.currentTarget.player != "X" && evt.currentTarget.player != "O")
     {
-        evt.currentTarget.player = ticTacToe.GetPlayerTurn() ? "X" : "O";
+        let currentPlayer = ticTacToe.GetPlayerTurn() ? "X" : "O";
+        evt.currentTarget.player = currentPlayer;
         evt.currentTarget.style.backgroundImage = ticTacToe.GetPlayerTurn() ? "url('Images/X.jpg')" : "url('Images/O.jpg')";
         evt.currentTarget.style.backgroundSize = "cover";
         let isWin = ticTacToe.PlayerMove(evt.currentTarget.posX, evt.currentTarget.posY);
@@ -103,10 +107,20 @@ function PlayerMove(evt){
 
         if(isWin)
         {
+            let winner;
+            if(currentPlayer = "X")
+            {
+                winner = player1Input.value;
+            }
+            else
+            {
+                winner = player2Input.value;
+            }
+
             setTimeout(function(){
-                alert("WIN");
+                alert("WINNER: " + winner);
                 ResetGame();
-            }, 100);
+            }, 200);
         }
     }
 }
